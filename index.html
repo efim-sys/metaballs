@@ -83,12 +83,12 @@ var mute = true
 function muteUnMute(){
 	if(mute){
 		mute = false;
-		muteButton.value = "🔊"; 
+		muteButton.innerHTML = "🔊"; 
 		theme.play();
 	}
 	else{
 		mute = true;
-		muteButton.value = "🔈";
+		muteButton.innerHTML = "🔈";
 		theme.pause();
 	}
 }
