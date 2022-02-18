@@ -12,7 +12,7 @@
         <div class="header">
             Metaballs
         </div>
-		
+
         <div class="controls">
             <div><span>[W]</span> Move</div>
             <div><span>[Space]</span> Laser</div>
@@ -21,6 +21,7 @@
         </div>
         <div class="score">
             <span id='score'>0</span> Score
+	    <span id='highScore'>0</span> Highest
         </div>
     </div>
     <div id="scene">
@@ -61,6 +62,7 @@ const UFO_PROP_LASER = 0.4; // Wahrscheinlichkeit für Erscheinen eines LASERs p
 const UFO_PROP_ROCKET = 0.1; // Wahrscheinlichkeit für Erscheinen eines LASERs pro Sekunde
 // Knopf
 const parent = document.getElementById('scene');
+let highScore = 0
 let livesMeter = document.getElementById('livesMeter')
 var lives = LIVES;
 var mobile = false;
@@ -333,9 +335,11 @@ export class Scene {
 	    //console.log(lives);
 		lives -= 1;
 		livesMeter.innerHTML = lives;
+	    	
 		if(lives < 1){
 			lives = LIVES;
 			livesMeter.innerHTML = lives;
+			if(score > highScore){highScore = score; document.getElementById("highScore") = highScore} 
 			for (var obj of this.objects) {
 				this.remove(obj);
 			}
