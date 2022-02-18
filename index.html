@@ -15,6 +15,7 @@
         <audio id="theme" loop> 
         	<source src="lunch-soundtrack.mp3" type="audio/mpeg"> 
         </audio> 
+	<button id="muteButton">🔈</button>
         <div class="controls">
             <div><span>[W]</span> Move</div>
             <div><span>[Space]</span> Laser</div>
@@ -71,10 +72,18 @@ let livesMeter = document.getElementById('livesMeter')
 var lives = LIVES;
 var mobile = false;
 let highMeter = document.getElementById('highScore')
+var muteButton = document.getElementById("muteButton");
+muteButton.addEventListener("click", muteUnMute);    
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
     mobile = true;
 }
 theme.play();
+
+function muteUnMute(){
+	if(muteButton.value == "🔈") muteButton.value = "🔊"; theme.pause();
+	else muteButton.value = "🔈"; theme.play();
+}
+	    
 // Object
 class Obj {
     constructor(id) {
