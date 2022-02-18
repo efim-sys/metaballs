@@ -80,8 +80,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 theme.play();
 
 function muteUnMute(){
-	if(muteButton.value == "🔈") muteButton.value = "🔊"; theme.pause();
-	else muteButton.value = "🔈"; theme.play();
+	if(muteButton.value == "🔈"){
+		muteButton.value = "🔊"; 
+		theme.pause();
+	}
+	else{
+		muteButton.value = "🔈";
+		theme.play();
+	}
 }
 	    
 // Object
