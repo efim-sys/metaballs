@@ -12,7 +12,7 @@
         <div class="header">
             Metaballs
         </div>
-        <audio controls loop> 
+        <audio id="theme" loop> 
         	<source src="lunch-soundtrack.mp3" type="audio/mpeg"> 
         </audio> 
         <div class="controls">
@@ -64,6 +64,7 @@ const UFO_PROP_SPAWN = 0.75; // Wahrscheinlichkeit für Erscheinen eines UFOs pr
 const UFO_PROP_LASER = 0.4; // Wahrscheinlichkeit für Erscheinen eines LASERs pro Sekunde
 const UFO_PROP_ROCKET = 0.1; // Wahrscheinlichkeit für Erscheinen eines LASERs pro Sekunde
 // Knopf
+var theme = document.getElementById("theme");
 const parent = document.getElementById('scene');
 let highScore = 0
 let livesMeter = document.getElementById('livesMeter')
@@ -73,6 +74,7 @@ let highMeter = document.getElementById('highScore')
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
     mobile = true;
 }
+theme.play();
 // Object
 class Obj {
     constructor(id) {
