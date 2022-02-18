@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+    background: #2f3136;
+    overflow: hidden;
+}
+
+object {
+    position: absolute;
+    pointer-events: none;
+}
+
+#ship {
+    width: 100px;
+}
+
+#ufo {
+    width: 80px;
+}
+
+#missile, #laser {
+    width: 50px;
+}
+
+#target {
+    width: 100px;
+    display: inline;
+    z-index: 2;
+    opacity: 0.5;
+    transform: translate(-50%, -50%);
+}
+
+.overlay {
+    position: relative;
+    width: 100vw;
+    padding: 0 1rem;
+
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    z-index: 1;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.overlay .score {
+    font-size: 2rem;
+}
+
+#score {
+    color: royalblue;
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+.overlay .header {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+}
+
+.overlay .controls {
+    font-size: 1.25rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.overlay .controls span {
+    color: royalblue;
+}
+
+#scene .container {
+    position: absolute;
+    top: 50vh;
+    width: 100vw;
+    padding: 2rem;
+
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 2rem;
+    color: white;
+    transform: translate(0, -50%);
+    border-style: none;
+    z-index: 400;
+    cursor: pointer;
+
+    transition: top 1s linear;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#scene .container h1 {
+    animation-name: scale;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+}
+
+#scene.playing .container {
+    display: none;
+}
+
+#scene object {
+    display: none;
+}
+
+#scene.playing object {
+    display: inline;
+}
