@@ -340,7 +340,7 @@ export class Scene {
 		if(lives < 1){
 			lives = LIVES;
 			livesMeter.innerHTML = lives;
-			if(score > highScore){highScore = score; document.getElementById("highScore") = highScore} 
+			if(score > highScore){highScore = score; document.getElementById("highScore").innerHTML = highScore} 
 			for (var obj of this.objects) {
 				this.remove(obj);
 			}
