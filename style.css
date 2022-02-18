@@ -57,6 +57,9 @@ object {
 #score {
     color: royalblue;
 }
+#highScore {
+    color: royalblue;
+}
 
 @keyframes scale {
     0% {
