@@ -63,6 +63,9 @@ const UFO_PROP_ROCKET = 0.1; // Wahrscheinlichkeit für Erscheinen eines LASERs 
 const parent = document.getElementById('scene');
 let livesMeter = document.getElementById('livesMeter')
 var lives = LIVES;
+if( Android|iPhone|iPad(navigator.userAgent) ) {
+ var mobile = true
+}
 // Object
 class Obj {
     constructor(id) {
