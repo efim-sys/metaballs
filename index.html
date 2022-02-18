@@ -15,7 +15,7 @@
         <audio id="theme" loop> 
         	<source src="lunch-soundtrack.mp3" type="audio/mpeg"> 
         </audio> 
-	<button id="muteButton", style="font-size: 30pt">🔊</button>
+	<button id="muteButton", style="font-size: 30pt">🔈</button>
         <div class="controls">
             <div><span>[W]</span> Move</div>
             <div><span>[Space]</span> Laser</div>
@@ -77,16 +77,19 @@ muteButton.addEventListener("click", muteUnMute);
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
     mobile = true;
 }
-theme.play();
+mute = true
+
 
 function muteUnMute(){
-	if(muteButton.value == "🔊"){
-		muteButton.value = "🔈"; 
-		theme.pause();
+	if(mute){
+		mute = false;
+		muteButton.value = "🔊"; 
+		theme.play();
 	}
 	else{
-		muteButton.value = "🔊";
-		theme.play();
+		mute = true;
+		muteButton.value = "🔈";
+		theme.pause();
 	}
 }
 	    
