@@ -63,9 +63,9 @@ const UFO_PROP_ROCKET = 0.1; // Wahrscheinlichkeit für Erscheinen eines LASERs 
 const parent = document.getElementById('scene');
 let livesMeter = document.getElementById('livesMeter')
 var lives = LIVES;
-//if( Android|iPhone|iPad(navigator.userAgent) ) {
-// var mobile = true
-//}
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+    var mobile = true;
+}
 // Object
 class Obj {
     constructor(id) {
@@ -230,12 +230,12 @@ export class Scene {
             this.aim.style.display = 'none';
         }
 
-        if (this.keys.has(KEY_SHOOT_LASER) && this.now - this.lastLaser > LASER_DELAY) {
+        if ((this.keys.has(KEY_SHOOT_LASER) * mobile) && this.now - this.lastLaser > LASER_DELAY) {
             this.lastLaser = this.now;
             this.shootLaser(this.ship, this.ship.rotation)
         }
 
-        if (this.keys.has(KEY_SHOOT_ROCKET) && this.now - this.lastMissile > MISSILE_DELAY && this.target) {
+        if ((this.keys.has(KEY_SHOOT_ROCKET) * mobile) && this.now - this.lastMissile > MISSILE_DELAY && this.target) {
             this.lastMissile = this.now;
             this.shootMissile(this.ship, this.target);
         }
@@ -260,7 +260,7 @@ export class Scene {
             switch (obj.id) {
                 case 'ship': {
                     obj.wormhole();
-                    var boosting = this.keys.has(KEY_BOOST);
+                    var boosting = this.keys.has(KEY_BOOST) * mobile;
                     if (obj.content) {
                         obj.content.getElementById('flame').setAttribute('opacity', 1 * boosting);
 						console.log(boosting);
