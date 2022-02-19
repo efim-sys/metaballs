@@ -85,9 +85,7 @@ const gitVersion = new XMLHttpRequest();
 gitVersion.open("GET", 'https://api.github.com/repos/efim-sys/metaballs/commits/main');
 gitVersion.send();
 gitVersion.onreadystatechange = (e) => {
-  data = "v. "+gitVersion.responseText.substring(12, 19);
-  if(mobile) data += " mobile";
-  versionID.innerHTML = data;
+  versionID.innerHTML = "v. "+gitVersion.responseText.substring(12, 19);
 }
 
 function muteUnMute(){
