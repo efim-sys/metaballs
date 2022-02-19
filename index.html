@@ -11,7 +11,7 @@
     <div class="overlay">
         <div>
             <h1 class="header">Metaballs</h1>
-	    <p align="center">1.0</p>
+	    <p id="versionID"align="center">Unknown version</p>
         </div>
         <audio id="theme" loop> 
         	<source src="lunch-soundtrack.mp3" type="audio/mpeg"> 
@@ -66,6 +66,7 @@ const UFO_PROP_SPAWN = 0.5; // Wahrscheinlichkeit für Erscheinen eines UFOs pro
 const UFO_PROP_LASER = 0.4; // Wahrscheinlichkeit für Erscheinen eines LASERs pro Sekunde
 const UFO_PROP_ROCKET = 0.1; // Wahrscheinlichkeit für Erscheinen eines LASERs pro Sekunde
 // Knopf
+var versionID = document.getElementById("versionID");
 var theme = document.getElementById("theme");
 const parent = document.getElementById('scene');
 let highScore = 0
@@ -80,6 +81,12 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 }
 var mute = true
 
+const gitVersion = new XMLHttpRequest();
+gitVersion.open("GET", 'https://api.github.com/repos/efim-sys/metaballs/commits/main');
+gitVersion.send();
+gitVersion.onreadystatechange = (e) => {
+  versionID.innerHTML = "v"+gitVersion.responseText.substring(12, 19);
+}
 
 function muteUnMute(){
 	if(mute){
