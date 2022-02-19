@@ -291,8 +291,8 @@ export class Scene {
                     var boosting = this.keys.has(KEY_BOOST) || mobile;
                     if (obj.content) {
                         obj.content.getElementById('flame').setAttribute('opacity', 1 * boosting);
-						console.log(boosting);
-                    }
+                        obj.content.getElementById('shipBody').setAttribute('style', "fill: green");
+		    }
                     obj.acceleration.x = boosting * SHIP_ACCELERATION * Math.cos(obj.rotation);
                     obj.acceleration.y = boosting * SHIP_ACCELERATION * Math.sin(obj.rotation);
                     obj.velocity.x *= 1 - this.dt;
