@@ -132,8 +132,3 @@ body {
     padding: 0;
     background: #f3f3f3;
   }
-  
-  input.largerCheckbox {
-    width: 60px;
-    height: 60px;
-}
