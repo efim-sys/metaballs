@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metaballs</title>
-    <bgsound src="lunch-soundtrack.mp3">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,8 +17,6 @@
         	<source src="lunch-soundtrack.mp3" type="audio/mpeg"> 
         </audio> 
 	<button id="muteButton", style="font-size: 30pt">🔈</button>
-        
-
         <div class="controls">
             <div><span>[W]</span> Move</div>
             <div><span>[Space]</span> Laser</div>
@@ -82,8 +79,8 @@ let livesMeter = document.getElementById('livesMeter')
 var lives = LIVES;
 var mobile = false;
 let highMeter = document.getElementById('highScore')
-//var muteButton = document.getElementById("muteButton");
-//muteButton.addEventListener("click", muteUnMute); 
+var muteButton = document.getElementById("muteButton");
+muteButton.addEventListener("click", muteUnMute); 
 hardMobile.addEventListener("click", switchMobile);    
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
     mobile = true;
