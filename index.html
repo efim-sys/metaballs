@@ -7,7 +7,7 @@
     <title>Metaballs</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color: #282b30">
+<body oncontextmenu="return false;" style="background-color: #282b30">
     <div class="overlay">
         <div>
             <h1 class="header">Metaballs</h1>
@@ -416,7 +416,6 @@ addEventListener('mousemove', e => {
     scene.mouse.x = e.clientX;
     scene.mouse.y = e.clientY;
 })
-addEventListener("contextmenu", e => e.preventDefault());
 // TODO: Ufo laser timer
 parent.addEventListener('mousedown', () => {
     if (!parent.classList.contains('playing')) {
