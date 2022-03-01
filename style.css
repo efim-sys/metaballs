@@ -8,15 +8,14 @@
 }
 
 body {
-	  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
-	font-family: 'Open Sans', sans-serif;
-    background: #2f3136;
+    font-family: 'Open Sans', sans-serif;
     overflow: hidden;
 }
 
@@ -136,8 +135,4 @@ object {
     display: inline;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    background: #f3f3f3;
-  }
+
