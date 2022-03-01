@@ -416,6 +416,7 @@ addEventListener('mousemove', e => {
     scene.mouse.x = e.clientX;
     scene.mouse.y = e.clientY;
 })
+addEventListener("contextmenu", e => e.preventDefault());
 // TODO: Ufo laser timer
 parent.addEventListener('mousedown', () => {
     if (!parent.classList.contains('playing')) {
