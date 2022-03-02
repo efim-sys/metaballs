@@ -160,17 +160,17 @@ class Obj {
     }
     wormhole() {
         if (this.position.x < 0 || this.position.x >= window.innerWidth) {
-            this.swapSpeed();
-            this.position.x = this.position.y / window.innerHeight * window.innerWidth;
+            //this.swapSpeed();
+            //this.position.x = this.position.y / window.innerHeight * window.innerWidth;
             //this.position.y = this.velocity.y > 0 ? 0 : window.innerHeight - 1;
-            //this.position.x = window.innerWidth * (this.position.x < 0);
+            this.position.x = (window.innerWidth - 1) * (this.position.x < 0);
         }
 
         if (this.position.y < 0 || this.position.y >= window.innerHeight) {
-            this.swapSpeed();
-            this.position.y = this.position.x / window.innerWidth * window.innerHeight;
+            //this.swapSpeed();
+            //this.position.y = this.position.x / window.innerWidth * window.innerHeight;
             //this.position.x = this.velocity.x > 0 ? 0 : window.innerWidth - 1;
-            //this.position.y = window.innerHeight * (this.position.y < 0);
+            this.position.y = (window.innerHeight - 1) * (this.position.y < 0);
         }
         // this.position.x = (this.position.x + window.innerWidth) % window.innerWidth;
         // this.position.y = (this.position.y + window.innerHeight) % window.innerHeight;
