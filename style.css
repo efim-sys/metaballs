@@ -24,7 +24,7 @@ object {
     pointer-events: none;
 }
 
-#ship {
+#ship, #other-ship {
     width: 100px;
 }
 
