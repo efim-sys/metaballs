@@ -58,6 +58,7 @@
 const LIVES = 5;
 	// STEUERUNG
 const KEY_BOOST = 'KeyW'; // Taste zum Beschleunigen
+const SEND_INTERVAL = 50;
 const KEY_SPAWN = 'KeyS'; // Todo: entfernen
 const KEY_SHOOT_ROCKET = 'KeyR'; // Taste zur Lenkraketenfreigabe
 const KEY_SHOOT_LASER = 'Space'; // Taste zur Lenkraketenfreigabe
@@ -452,7 +453,7 @@ class MultiPlayer {
 	connect_room(){
 		multi.socket.send("connect " + this.value);
 		this.parentElement.style.visibility = "hidden";
-		setInterval(multi.our_ship,100);
+		setInterval(multi.our_ship,SEND_INTERVAL);
 	}
 	pass_check(){
 		if(typeof(this.msg.pass) != "undefined"){
