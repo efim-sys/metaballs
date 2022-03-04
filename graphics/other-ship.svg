@@ -19,8 +19,8 @@
    <path d="m10,50q10,5 15,0" fill="yellow" id="svg_8"/>
   </g>
   <g fill="#1e45bc" id="svg_9" transform="matrix(1 0 0 1 0 0)">
-   <polygon fill="#00ff00" id="svg_10" points="65,50 45,22.5 20,20 30,50"/>
-   <polygon fill="#00ff00" id="svg_11" points="65,50 45,77.5 20,80 30,50"/>
+   <polygon fill="#cc0605" id="svg_10" points="65,50 45,22.5 20,20 30,50"/>
+   <polygon fill="#cc0605" id="svg_11" points="65,50 45,77.5 20,80 30,50"/>
   </g>
   <rect fill="#7fff00" height="100" id="svg_14" mask="url(#rumpf)" width="25" x="20"/>
   <rect fill="white" height="100" id="svg_12" mask="url(#rumpf)" transform="matrix(1 0 0 1 0 0)" width="40" x="45"/>
