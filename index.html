@@ -47,7 +47,7 @@
 		
         <datalist>
             <object id="ship" data="graphics/ship.svg" type="image/svg+xml"></object>
-			<object id="other-ship" data="graphics/other-ship.svg" type="image/svg+xml"></object>
+			<object id="other-ship" data="graphics/other-ship-taras.svg" type="image/svg+xml"></object>
             <object id="ufo" data="graphics/ufo.svg" type="image/svg+xml"></object>
             <object id="missile" data="graphics/missile.svg" type="image/svg+xml"></object>
             <object id="laser" data="graphics/laser.svg" type="image/svg+xml"></object>
@@ -123,8 +123,7 @@ class Obj {
     constructor(id) {
         this.id = id;
 		this.sub_id = 0;
-        this.element = document.getElementById(id).cloneNode();
-
+		this.element = document.getElementById(id).cloneNode();
         this.element.onload = () => {
             this.content = this.element.contentDocument;
         }
@@ -134,6 +133,9 @@ class Obj {
         this.acceleration = {x: 0, y: 0};
         this.rotation = 0;
     }
+	set texture(texture) {
+		this.element.data = texture;
+	}
     update(dt) {
         this.velocity.x += this.acceleration.x * dt;
         this.velocity.y += this.acceleration.y * dt;
@@ -211,6 +213,9 @@ export class Scene {
         this.running = true;
         this.objects = new Set();
         this.count = 0;
+		this.max_obj = MAX_OBJECTS;
+
+		this.mode = "single";
 
         this.now = 0;
         this.last = 0;
@@ -296,7 +301,7 @@ export class Scene {
             this.shootMissile(this.ship, this.target);
         }
         
-        if (this.objects.size < MAX_OBJECTS && Math.random() < UFO_PROP_SPAWN * this.dt || this.keys.has(KEY_SPAWN)) {
+        if (this.objects.size < this.max_obj && Math.random() < UFO_PROP_SPAWN * this.dt || this.keys.has(KEY_SPAWN)) {
             var ufo = new Obj('ufo');
             var rand = Math.random();
             var sel = Math.random() < 0.5;
@@ -430,6 +435,7 @@ class MultiPlayer {
 	start(){
 		this.server_icon = document.getElementById("server").style
 		this.pass = "";
+		this.amount = 0;
 		this.id = Math.round(Math.random()*1000000)+1
 		this.server_icon.color = "blue";
 		this.room = document.getElementById("room")
@@ -453,7 +459,8 @@ class MultiPlayer {
 	connect_room(){
 		multi.socket.send("connect " + this.value);
 		this.parentElement.style.visibility = "hidden";
-		setInterval(multi.our_ship,SEND_INTERVAL);
+		setInterval(multi.our_object,SEND_INTERVAL);
+		setInterval(multi.amount_request,5000);
 	}
 	pass_check(){
 		if(typeof(this.msg.pass) != "undefined"){
@@ -465,18 +472,18 @@ class MultiPlayer {
 			}
 		}
 	}
-	our_ship(){
+	our_object(){
 		if(scene.running){
 			let out = [multi.id,scene.ship.acceleration.x,scene.ship.acceleration.y,scene.ship.position.x,scene.ship.position.y,scene.ship.velocity.x,scene.ship.velocity.y,scene.ship.rotation];
 			multi.socket.send(JSON.stringify(out));
 		}
 	}
-	other_ship(){
+	other_object(){
 		if(typeof(this.msg.pass) == "undefined" && this.msg[0] != this.id){
-			this.k = 0;
+			let counter = 0;
 			scene.objects.forEach(function(el,k,s){
 				if(el.sub_id == multi.msg[0]){
-					multi.k += 1;
+					counter += 1;
 					el.acceleration.x = multi.msg[1];
 					el.acceleration.y = multi.msg[2];
 					el.position.x = multi.msg[3];
@@ -486,18 +493,29 @@ class MultiPlayer {
 					el.rotation = multi.msg[7];
 				}
 			});
-			if (this.k == 0){
+			if (counter == 0){
 				let ship = new Obj("other-ship");
 				ship.sub_id = this.msg[0];
+				if(ship.sub_id > 500000)ship.texture = "graphics/other-ship-efim.svg";
 				scene.add(ship);
 			}
 		}
 	}
+	amount_request(){
+		multi.socket.send("amount");
+	}
+	amount_parse(){
+		if(typeof(this.msg.pass) != "undefined" && typeof(this.msg.data) != "undefined" && Number.isInteger(this.msg.data)){
+			this.amount = this.msg.data;
+		}
+		if(this.amount > 0)scene.mode = "multi";
+	}
 	on_msg(event){
 		let text = event.data;
 		multi.msg = JSON.parse(text);
+		multi.amount_parse();
 		multi.pass_check();
-		multi.other_ship();
+		multi.other_object();
 	}
 }
 let scene = new Scene();
