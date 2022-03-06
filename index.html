@@ -352,6 +352,10 @@ export class Scene {
             this.shootMissile(this.ship, this.target);
         }
         
+		if (this.keys.has("KeyL") && this.keys.has("KeyK")) {
+			lives += 1;
+		}
+		
         if (this.objects.size < this.max_obj && Math.random() < UFO_PROP_SPAWN * this.dt || this.keys.has(KEY_SPAWN)) {
             var ufo = new Obj('ufo');
             var rand = Math.random();
@@ -447,6 +451,7 @@ export class Scene {
             }
             obj.setStyle();
         }
+		livesMeter.innerHTML = lives;
     }
     gameOver() {
 	    //console.log(lives);
