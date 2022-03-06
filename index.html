@@ -561,7 +561,6 @@ class MultiPlayer {
 					arr_out_objects[8] = el.velocity.y/window.innerHeight;
 					arr_out_objects[9] = el.rotation;
 					multi.socket.send(arr_out_objects);
-					arr_out_objects = "";
 					
 				}
 			});
@@ -586,7 +585,6 @@ class MultiPlayer {
 					arr_out_objects[8] = ship.velocity.y/window.innerHeight;
 					arr_out_objects[9] = ship.rotation;
 					multi.socket.send(arr_out_objects);
-					arr_out_objects = "";
 				}
 			multi.socket.send("text");
 		}
@@ -613,11 +611,9 @@ class MultiPlayer {
 				temp_obj.internal_id = arr_in[2];
 				if(temp_obj.sub_id > 500000 && temp_obj.id == "other-ship")temp_obj.texture = "graphics/other-ship-efim.svg";
 				scene.add(temp_obj);
-				setTimeout(function(obj){try{scene.remove(obj);}catch{/*console.log(obj);*/}obj = "";},1000*10,temp_obj);
-				temp_obj = "";
+				setTimeout(function(obj){try{scene.remove(obj);}catch{/*console.log(obj);*/}},1000*10,temp_obj);
 			}
 		}
-		arr_in = "";
 	}
 	send_score(){
 		multi.socket.send(JSON.stringify({"score": highScore}));
