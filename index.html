@@ -85,6 +85,7 @@ var lives = LIVES;
 var mobile = false;
 let highMeter = document.getElementById('highScore')
 var muteButton = document.getElementById("muteButton");
+let internal_id_counter = 0;
 muteButton.addEventListener("click", muteUnMute); 
 hardMobile.addEventListener("click", switchMobile);    
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
@@ -121,8 +122,11 @@ function muteUnMute(){
 // Object
 class Obj {
     constructor(id) {
+		id = this.text_id(id);
         this.id = id;
 		this.sub_id = 0;
+		internal_id_counter += 1;
+		this.internal_id = internal_id_counter;
 		this.element = document.getElementById(id).cloneNode();
         this.element.onload = () => {
             this.content = this.element.contentDocument;
@@ -135,6 +139,48 @@ class Obj {
     }
 	set texture(texture) {
 		this.element.data = texture;
+	}
+	text_id(num) {
+		if(Number.isInteger(num)) {
+			switch (num) {
+				case 0:
+					return "ship";
+					break;
+				case 1:
+					return "other-ship";
+					break;
+				case 2:
+					return "ufo";
+					break;
+				case 3:
+					return "missile";
+					break;
+				case 4:
+					return "laser";
+					break;
+			}
+		}else{
+			return num;
+		}
+	}
+	get num_id() {
+		switch (this.id) {
+			case "ship":
+				return 0;
+				break;
+			case "other-ship":
+				return 1;
+				break;
+			case "ufo":
+				return 2;
+				break;
+			case "missile":
+				return 3;
+				break;
+			case "laser":
+				return 4;
+				break;
+		}
 	}
     update(dt) {
         this.velocity.x += this.acceleration.x * dt;
@@ -250,26 +296,31 @@ export class Scene {
         parent.removeChild(obj.element);
     }
     shootLaser(author, direction) {
-        var laser = new Obj('laser');
-        laser.position.x = author.position.x;
-        laser.position.y = author.position.y;
-        laser.rotation = direction;
-        laser.velocity.x = LASER_VELOCITY * Math.cos(direction);
-        laser.velocity.y = LASER_VELOCITY * Math.sin(direction);
-        laser.author = author;
-        this.add(laser);
+			var laser = new Obj('laser');
+			laser.position.x = author.position.x;
+			laser.position.y = author.position.y;
+			laser.rotation = direction;
+			laser.velocity.x = LASER_VELOCITY * Math.cos(direction);
+			laser.velocity.y = LASER_VELOCITY * Math.sin(direction);
+			laser.author = author;
+			this.add(laser);
     }
     shootMissile(author, target) {
-        var missile = new Obj('missile');
-        missile.position.x = author.position.x;
-        missile.position.y = author.position.y;
-        missile.rotation = author.rotation;
-        missile.author = author;
-        missile.target = target;
-        this.add(missile);
+			var missile = new Obj('missile');
+			missile.position.x = author.position.x;
+			missile.position.y = author.position.y;
+			missile.rotation = author.rotation;
+			missile.author = author;
+			missile.target = target;
+			this.add(missile);
     }
     update() {
         this.target = undefined;
+		
+		if(this.mode == "multi"){
+			this.max_obj = MAX_OBJECTS / multi.amount;
+		}
+		
         for (var obj of this.objects) {
             if (obj.id != 'ufo') continue;
             if (obj.isInside(this.mouse.x, this.mouse.y)) {
@@ -372,7 +423,7 @@ export class Scene {
                         for (var other of this.objects) {
                             if (obj.element == other.element) continue;
                             if (obj.author == other) continue;
-                            if (obj.author == other.author) continue;
+                            //if (obj.author == other.author) continue;
                             if (obj.colliding(other)) {
                                 if (other == this.ship) {
 								    this.remove(obj);
@@ -443,6 +494,7 @@ class MultiPlayer {
 		this.socket = new WebSocket("wss://g.548b.ru/wss");
 		this.socket.onopen = this.bind_ws;
 		this.socket.onclose = this.close_ws;
+		this.socket.binaryType = "arraybuffer";
 	}
 	bind_ws(){
 		multi.server_icon.color = "green";
@@ -459,8 +511,10 @@ class MultiPlayer {
 	connect_room(){
 		multi.socket.send("connect " + this.value);
 		this.parentElement.style.visibility = "hidden";
-		setInterval(multi.our_object,SEND_INTERVAL);
+		setInterval(multi.our_ship,SEND_INTERVAL);
+		setInterval(multi.our_objects,SEND_INTERVAL*4);
 		setInterval(multi.amount_request,5000);
+		setInterval(multi.send_score,5000);
 	}
 	pass_check(){
 		if(typeof(this.msg.pass) != "undefined"){
@@ -472,32 +526,85 @@ class MultiPlayer {
 			}
 		}
 	}
-	our_object(){
-		if(scene.running){
-			let out = [multi.id,scene.ship.acceleration.x,scene.ship.acceleration.y,scene.ship.position.x,scene.ship.position.y,scene.ship.velocity.x,scene.ship.velocity.y,scene.ship.rotation];
-			multi.socket.send(JSON.stringify(out));
+	our_objects(){
+		if(scene.running && scene.mode == "multi"){
+			multi.socket.send("binary");
+			scene.objects.forEach(function(el,k,s){
+				if((el.sub_id == 0 || el.sub_id == multi.id) && el.id != "ship"){
+					let arr_out_objects = new ArrayBuffer(128);
+					arr_out_objects = new Float32Array(arr_out_objects);
+					arr_out_objects[0] = multi.id;
+					arr_out_objects[1] = el.num_id;
+					arr_out_objects[3] = el.acceleration.x/window.innerWidth;
+					arr_out_objects[4] = el.acceleration.y/window.innerHeight;
+					arr_out_objects[5] = el.position.x/window.innerWidth;
+					arr_out_objects[6] = el.position.y/window.innerHeight;
+					arr_out_objects[7] = el.velocity.x/window.innerWidth;
+					arr_out_objects[8] = el.velocity.y/window.innerHeight;
+					arr_out_objects[9] = el.rotation;
+					multi.socket.send(arr_out_objects);
+					
+				}
+			});
+			multi.socket.send("text");
+		}
+	}
+	our_ship(){
+		if(scene.running && scene.mode == "multi"){
+			multi.socket.send("binary");
+				let ship = scene.ship;
+				if(ship.sub_id == 0 || ship.sub_id == multi.id){
+					let arr_out_objects = new ArrayBuffer(128);
+					arr_out_objects = new Float32Array(arr_out_objects);
+					arr_out_objects[0] = multi.id;
+					arr_out_objects[1] = 1; //hardCoded I will rewrite it in future means "other-ship"
+					arr_out_objects[2] = ship.internal_id;
+					arr_out_objects[3] = ship.acceleration.x/window.innerWidth;
+					arr_out_objects[4] = ship.acceleration.y/window.innerHeight;
+					arr_out_objects[5] = ship.position.x/window.innerWidth;
+					arr_out_objects[6] = ship.position.y/window.innerHeight;
+					arr_out_objects[7] = ship.velocity.x/window.innerWidth;
+					arr_out_objects[8] = ship.velocity.y/window.innerHeight;
+					arr_out_objects[9] = ship.rotation;
+					multi.socket.send(arr_out_objects);
+				}
+			multi.socket.send("text");
 		}
 	}
 	other_object(){
-		if(typeof(this.msg.pass) == "undefined" && this.msg[0] != this.id){
+		let arr_in = new Float32Array(this.msg_raw);
+		if(arr_in[0] != this.id && arr_in.length > 31){
 			let counter = 0;
 			scene.objects.forEach(function(el,k,s){
-				if(el.sub_id == multi.msg[0]){
+				if(el.sub_id == arr_in[0] && el.internal_id == arr_in[2]){
 					counter += 1;
-					el.acceleration.x = multi.msg[1];
-					el.acceleration.y = multi.msg[2];
-					el.position.x = multi.msg[3];
-					el.position.y = multi.msg[4];
-					el.velocity.x = multi.msg[5];
-					el.velocity.y = multi.msg[6];
-					el.rotation = multi.msg[7];
+					el.acceleration.x = arr_in[3]*window.innerWidth;
+					el.acceleration.y = arr_in[4]*window.innerHeight;
+					el.position.x = arr_in[5]*window.innerWidth;
+					el.position.y = arr_in[6]*window.innerHeight;
+					el.velocity.x = arr_in[7]*window.innerWidth;
+					el.velocity.y = arr_in[8]*window.innerHeight;
+					el.rotation = arr_in[9];
 				}
 			});
 			if (counter == 0){
-				let ship = new Obj("other-ship");
-				ship.sub_id = this.msg[0];
-				if(ship.sub_id > 500000)ship.texture = "graphics/other-ship-efim.svg";
-				scene.add(ship);
+				let temp_obj = new Obj(arr_in[1]);
+				temp_obj.sub_id = arr_in[0];
+				temp_obj.internal_id = arr_in[2];
+				if(temp_obj.sub_id > 500000 && temp_obj.id == "other-ship")temp_obj.texture = "graphics/other-ship-efim.svg";
+				scene.add(temp_obj);
+				setTimeout(function(obj){try{scene.remove(obj);}catch{/*console.log(obj);*/}},1000*10,temp_obj);
+			}
+		}
+	}
+	send_score(){
+		multi.socket.send(JSON.stringify({"score": highScore}));
+	}
+	get_score(){
+		if(typeof(multi.msg.score) != "undefined"){
+			if(multi.msg.score > highScore){
+				highScore = multi.msg.score;
+				highMeter.innerHTML = highScore;
 			}
 		}
 	}
@@ -511,11 +618,13 @@ class MultiPlayer {
 		if(this.amount > 0)scene.mode = "multi";
 	}
 	on_msg(event){
-		let text = event.data;
-		multi.msg = JSON.parse(text);
+		let data = event.data;
+		multi.msg_raw = data;
+		try{multi.msg = JSON.parse(data);}catch{}
 		multi.amount_parse();
 		multi.pass_check();
 		multi.other_object();
+		multi.get_score();
 	}
 }
 let scene = new Scene();
