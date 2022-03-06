@@ -612,6 +612,7 @@ class MultiPlayer {
 				if(temp_obj.sub_id > 500000 && temp_obj.id == "other-ship")temp_obj.texture = "graphics/other-ship-efim.svg";
 				scene.add(temp_obj);
 				setTimeout(function(obj){try{scene.remove(obj);}catch{/*console.log(obj);*/}},1000*10,temp_obj);
+				this.other_object();
 			}
 		}
 	}
