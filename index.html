@@ -92,6 +92,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     mobile = true;
 }
 var mute = true
+var police;
 
 hardMobile.checked = mobile;
 
@@ -109,11 +110,22 @@ function switchMobile(){
 function muteUnMute(){
 	if(mute){
 		mute = false;
+		let blue = false;
+		police = setInterval(function(){
+			if(!blue){
+				scene.ship.texture = "graphics/other-ship-efim.svg";
+			}else{
+				scene.ship.texture = "graphics/ship.svg";
+			}
+			blue = !blue;
+		},500)
 		muteButton.innerHTML = "🔊"; 
 		theme.play();
 	}
 	else{
 		mute = true;
+		clearInterval(police);
+		scene.ship.texture = "graphics/ship.svg";
 		muteButton.innerHTML = "🔈";
 		theme.pause();
 	}
