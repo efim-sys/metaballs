@@ -98,10 +98,13 @@ hardMobile.checked = mobile;
 
 function preload(imgs) {
     var img;
-    for (var i = 0, len = imgs.length; i < len; ++i) {
-        img = new Image();
-        img.src = imgs[i];
-    }
+	for(var z = 0; z<=5; z++){
+		for (var i = 0, len = imgs.length; i < len; ++i) {
+			img = new Image();
+			img.src = imgs[i];
+			img = "";
+		}
+	}
 }
 
 preload(["graphics/ship.svg","graphics/other-ship-taras.svg","graphics/other-ship-efim.svg","graphics/ufo.svg","graphics/missile.svg","graphics/laser.svg","graphics/target.svg"]);
