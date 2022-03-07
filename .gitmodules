@@ -1,0 +1,3 @@
+[submodule "metaballs"]
+	path = metaballs
+	url = https://github.com/efim-sys/metaballs/
