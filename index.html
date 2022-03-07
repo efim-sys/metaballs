@@ -96,6 +96,16 @@ var police;
 
 hardMobile.checked = mobile;
 
+function preload(imgs) {
+    var img;
+    for (var i = 0, len = imgs.length; i < len; ++i) {
+        img = new Image();
+        img.src = imgs[i];
+    }
+}
+
+preload(["graphics/ship.svg","graphics/other-ship-taras.svg","graphics/other-ship-efim.svg","graphics/ufo.svg","graphics/missile.svg","graphics/laser.svg","graphics/target.svg"]);
+
 const gitVersion = new XMLHttpRequest();
 gitVersion.open("GET", 'https://api.github.com/repos/efim-sys/metaballs/commits/main');
 gitVersion.send();
