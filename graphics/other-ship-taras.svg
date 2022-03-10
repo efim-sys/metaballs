@@ -22,5 +22,5 @@
   <rect fill="#96d102" height="100" id="svg_14" mask="url(#rumpf)" width="25" x="20"/>
   <rect fill="white" height="100" id="svg_12" mask="url(#rumpf)" transform="matrix(1 0 0 1 0 0)" width="40" x="45"/>
   <rect fill="#96d102" height="100" id="svg_15" mask="url(#rumpf)" width="15" x="85"/>
-  <circle cx="70" cy="50" fill="#7fff00" id="svg_16" r="6" stroke="black" stroke-width="0.5"/>
+  <circle cx="70" cy="50" fill="#96d102" id="svg_16" r="6" stroke="black" stroke-width="0.5"/>
 </svg>
