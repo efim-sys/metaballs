@@ -66,6 +66,7 @@ const SEND_INTERVAL = 50;
 const KEY_SPAWN = 'KeyS'; // Todo: entfernen
 const KEY_SHOOT_ROCKET = 'KeyR'; // Taste zur Lenkraketenfreigabe
 const KEY_SHOOT_LASER = 'Space'; // Taste zur Lenkraketenfreigabe
+const ADD_BOOST = 'ShiftLeft';
 // KONSTANTEN
 const MAX_OBJECTS = 16; // Maximale Anzahl von Objekten auf dem Bildschirm
 const SHIP_ACCELERATION = 900; // Schiffbeschleunigung in Pixel pro Quadratsekunde
@@ -406,6 +407,7 @@ export class Scene {
                 case 'ship': {
                     obj.wormhole();
                     var boosting = this.keys.has(KEY_BOOST) || mobile;
+					if(this.keys.has(ADD_BOOST))boosting *= 2;
                     if (obj.content) {
                         obj.content.getElementById('flame').setAttribute('opacity', 1 * boosting);
                         
