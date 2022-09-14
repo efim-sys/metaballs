@@ -55,6 +55,9 @@
             <object id="ufo" data="graphics/ufo.svg" type="image/svg+xml"></object>
             <object id="missile" data="graphics/missile.svg" type="image/svg+xml"></object>
             <object id="laser" data="graphics/laser.svg" type="image/svg+xml"></object>
+            <object id="mylaser" data="graphics/mylaser.svg" type="image/svg+xml"></object>
+            <object id="mymissile" data="graphics/mymissile.svg" type="image/svg+xml"></object>
+
         </datalist>
         <object id="target" data="graphics/target.svg" type="image/svg+xml"></object>
     </div>
@@ -326,7 +329,11 @@ export class Scene {
         parent.removeChild(obj.element);
     }
     shootLaser(author, direction) {
-			var laser = new Obj('laser');
+			var laser
+            if(author.id === "ship")
+                laser = new Obj('mylaser');
+            else
+                laser = new Obj('laser');
 			laser.position.x = author.position.x;
 			laser.position.y = author.position.y;
 			laser.rotation = direction;
@@ -336,7 +343,11 @@ export class Scene {
 			this.add(laser);
     }
     shootMissile(author, target) {
-			var missile = new Obj('missile');
+            var missile
+            if(author.id === "ship")
+                missile = new Obj('mymissile');
+            else
+                missile = new Obj('missile');
 			missile.position.x = author.position.x;
 			missile.position.y = author.position.y;
 			missile.rotation = author.rotation;
