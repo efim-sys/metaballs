@@ -51,12 +51,10 @@
             <object id="ufo" data="graphics/ufo.svg" type="image/svg+xml"></object>
             <object id="missile" data="graphics/missile.svg" type="image/svg+xml"></object>
             <object id="laser" data="graphics/laser.svg" type="image/svg+xml"></object>
-            <object id="mylaser" data="graphics/mylaser.svg" type="image/svg+xml"></object>
-            <object id="mymissile" data="graphics/mymissile.svg" type="image/svg+xml"></object>
         </datalist>
         <object id="target" data="graphics/target.svg" type="image/svg+xml"></object>
     </div>
-    <script type="module" defer>
+    <script defer>
 
 const LIVES = 5;
 	// STEUERUNG
@@ -146,6 +144,7 @@ class Obj {
         this.element.style.left = `${this.position.x}px`;
         this.element.style.top = `${this.position.y}px`;
         this.element.style.transform = `translate(-50%,-50%) rotate(${this.rotation}rad)`;
+        if(this.author.id === "ship" && this.id === "laser")this.element.data = "mylaser"
     }
     hitbox() {
         return this.element.getBoundingClientRect();
@@ -207,7 +206,7 @@ class Obj {
     }
 }
 // Szenenobjekt
-export class Scene {
+class Scene {
     constructor() {
         this.running = true;
         this.objects = new Set();
@@ -246,11 +245,7 @@ export class Scene {
         parent.removeChild(obj.element);
     }
     shootLaser(author, direction) {
-        var laser
-            if(author.id === "ship")
-                laser = new Obj('mylaser');
-            else
-                laser = new Obj('laser');
+        var laser = new Obj('laser');
         laser.position.x = author.position.x;
         laser.position.y = author.position.y;
         laser.rotation = direction;
@@ -260,11 +255,7 @@ export class Scene {
         this.add(laser);
     }
     shootMissile(author, target) {
-        var missile
-        if(author.id === "ship")
-            missile = new Obj('mymissile');
-        else
-            missile = new Obj('missile');
+        var missile = new Obj('missile');
         missile.position.x = author.position.x;
         missile.position.y = author.position.y;
         missile.rotation = author.rotation;
@@ -351,7 +342,8 @@ export class Scene {
                     obj.wormhole();
                     break;
                 }
-                case 'missile', 'mymissile': {
+                case 'missile':
+                case 'mymissile': {
                     if (obj.target) {
                         var angle = Math.atan2(obj.target.position.y - obj.position.y, obj.target.position.x - obj.position.x);
                         var offset = angle - obj.rotation;
@@ -361,7 +353,8 @@ export class Scene {
                     obj.velocity.y = MISSILE_VELOCITY * Math.sin(obj.rotation);
                     // continues at laser
                 }
-                case 'laser', 'mylaser': {
+                case 'laser':
+                case 'mylaser': {
                     if (obj.outofmap()) {
                         this.remove(obj);
                     } else {
