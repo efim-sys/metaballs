@@ -14,6 +14,6 @@ export default {
     UFO_PROP_LASER: 0.4, // Wahrscheinlichkeit für Erscheinen eines LASERs pro Sekunde
     UFO_PROP_ROCKET: 0.1, // Wahrscheinlichkeit für Erscheinen eines LASERs pro Sekunde}
     LIVES: 5,
-    SHIELD_PROP_SPAWN: 0.005,
-    SHIELD_PROP_DURATION: 5_000,
+    SHIELD_PROP_SPAWN: 0.001,
+    SHIELD_PROP_DURATION: 3_500,
 }
