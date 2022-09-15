@@ -1,59 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="google-site-verification" content="WeQRoAj5TkWofmU3QRAFlHWbbO5S4HTpdKXYi2nzN94" />
-    <meta name="yandex-verification" content="a7bb0bcb098626a1" />
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metaballs</title>
-    <link rel="icon" type="image/x-icon" href="/metaballs.ico">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body oncontextmenu="return false;" style="background-color: #282b30">
-    <div class="overlay">
-        <div>
-            <h1 class="header">Metaballs</h1>
-	    <p id="versionID"align="center">Unknown version</p>
+    <head>
+        <meta
+            name="google-site-verification"
+            content="WeQRoAj5TkWofmU3QRAFlHWbbO5S4HTpdKXYi2nzN94"
+        />
+        <meta name="yandex-verification" content="a7bb0bcb098626a1" />
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Metaballs</title>
+        <link rel="icon" type="image/x-icon" href="/metaballs.ico" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body oncontextmenu="return false;" style="background-color: #282b30">
+        <div class="overlay">
+            <div>
+                <h1 class="header">Metaballs</h1>
+                <p id="versionID" align="center">v. 2.0</p>
+            </div>
+            <audio id="theme" loop>
+                <source src="lunch-soundtrack.mp3" type="audio/mpeg" />
+            </audio>
+            <button id="muteButton" , style="font-size: 30pt">🔈</button>
+            <div class="controls">
+                <div><span>[W]</span> Move</div>
+                <div><span>[Space]</span> Laser</div>
+                <div><span>[Maus]</span> Rotate</div>
+                <div><span>[R]</span> Rakete</div>
+                <div>
+                    <button
+                        class="controls"
+                        style="height: 100%"
+                        onclick="window.location.href='/online'"
+                    >
+                        Multiplayer
+                    </button>
+                </div>
+            </div>
+            <p>Auto</p>
+            <div>
+                <input
+                    id="hardMobile"
+                    style="width: 60px; height: 60px"
+                    type="checkbox"
+                />
+            </div>
+            <div class="score">
+                Score: <span id="score">0</span> <br />Highest:
+                <span id="highScore">0</span>
+            </div>
         </div>
-        <audio id="theme" loop> 
-        	<source src="lunch-soundtrack.mp3" type="audio/mpeg"> 
-        </audio> 
-	<button id="muteButton", style="font-size: 30pt">🔈</button>
-        <div class="controls">
-            <div><span>[W]</span> Move</div>
-            <div><span>[Space]</span> Laser</div>
-            <div><span>[Maus]</span> Rotate</div>
-            <div><span>[R]</span> Rakete</div>
-			<div><button class="controls" style="height: 100%;" onclick="window.location.href='/online'">Multiplayer</button></div>
+        <div id="scene">
+            <div>
+                <p
+                    id="livesMeter"
+                    style="
+                        color: #575757;
+                        font-size: 500pt;
+                        user-select: none;
+                        text-align: center;
+                    "
+                >
+                    5
+                </p>
+            </div>
+            <div class="container">
+                <h1>Start the game</h1>
+            </div>
+
+            <datalist>
+                <object
+                    id="ship"
+                    data="graphics/ship.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="ufo"
+                    data="graphics/ufo.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="missile"
+                    data="graphics/missile.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="laser"
+                    data="graphics/laser.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="mylaser"
+                    data="graphics/mylaser.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="mymissile"
+                    data="graphics/mymissile.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="shield"
+                    data="graphics/shield.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="border"
+                    data="graphics/border.svg"
+                    type="image/svg+xml"
+                ></object>
+            </datalist>
+            <object
+                id="target"
+                data="graphics/target.svg"
+                type="image/svg+xml"
+            ></object>
         </div>
-	    <p>Auto</p>
-        <div>
-            
-            <input id="hardMobile" style="width: 60px; height: 60px" type="checkbox">
-        </div>
-        <div class="score">
-            Score: <span id='score'>0</span>
-	    <br>Highest: <span id='highScore'>0</span>
-	    
-        </div>
-    </div>
-    <div id="scene">
-		<div>
-			<p id = "livesMeter" style = " color: #575757; font-size: 500pt; user-select: none; text-align: center">5</p>
-		</div>
-        <div class="container">
-            <h1>Start the game</h1>
-        </div>
-		
-        <datalist>
-            <object id="ship" data="graphics/ship.svg" type="image/svg+xml"></object>
-            <object id="ufo" data="graphics/ufo.svg" type="image/svg+xml"></object>
-            <object id="missile" data="graphics/missile.svg" type="image/svg+xml"></object>
-            <object id="laser" data="graphics/laser.svg" type="image/svg+xml"></object>
-        </datalist>
-        <object id="target" data="graphics/target.svg" type="image/svg+xml"></object>
-    </div>
-    <script defer src="./scripts/main.js"></script>
-</body>
+        <script src="./scripts/main.js" type="module" defer></script>
+    </body>
 </html>
