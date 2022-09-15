@@ -1,695 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="google-site-verification" content="WeQRoAj5TkWofmU3QRAFlHWbbO5S4HTpdKXYi2nzN94" />
-    <meta name="yandex-verification" content="a7bb0bcb098626a1" />
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7159149477598216"
-     crossorigin="anonymous"></script>
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7159149477598216"
-     crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metaballs</title>
-    <link rel="icon" type="image/x-icon" href="/metaballs.ico">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body oncontextmenu="return false;" style="background-color: #282b30">
-    <div class="overlay">
-        <div>
-            <h1 class="header">Metaballs</h1>
-	    <p id="versionID"align="center">Unknown version</p>
+    <head>
+        <meta
+            name="google-site-verification"
+            content="WeQRoAj5TkWofmU3QRAFlHWbbO5S4HTpdKXYi2nzN94"
+        />
+        <meta name="yandex-verification" content="a7bb0bcb098626a1" />
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Metaballs</title>
+        <link rel="icon" type="image/x-icon" href="/metaballs.ico" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body oncontextmenu="return false;" style="background-color: #282b30">
+        <div class="overlay">
+            <div>
+                <h1 class="header">Metaballs</h1>
+                <p id="versionID" align="center">v. 2.0</p>
+            </div>
+            <audio id="theme" loop>
+                <source src="lunch-soundtrack.mp3" type="audio/mpeg" />
+            </audio>
+            <button id="muteButton" , style="font-size: 30pt">🔈</button>
+            <div class="controls">
+                <div><span>[W]</span> Move</div>
+                <div><span>[Space]</span> Laser</div>
+                <div><span>[Maus]</span> Rotate</div>
+                <div><span>[R]</span> Rakete</div>
+                <div>
+                    <button
+                        class="controls"
+                        style="height: 100%"
+                        onclick="window.location.href='/online'"
+                    >
+                        Multiplayer
+                    </button>
+                </div>
+            </div>
+            <p>Auto</p>
+            <div>
+                <input
+                    id="hardMobile"
+                    style="width: 60px; height: 60px"
+                    type="checkbox"
+                />
+            </div>
+            <div class="score">
+                Score: <span id="score">0</span> <br />Highest:
+                <span id="highScore">0</span>
+            </div>
         </div>
-		<div id ="server" style="font-size: 40pt;color: blue; background: rgba(0,0,0);">🖥</div>
-        <audio id="theme" loop> 
-        	<source src="lunch-soundtrack.mp3" type="audio/mpeg"> 
-        </audio> 
-	<button id="muteButton", style="font-size: 30pt">🔈</button>
-        <div class="controls">
-            <div><span>[W]</span> Move</div>
-            <div><span>[Space]</span> Laser</div>
-            <div><span>[Maus]</span> Rotate</div>
-            <div><span>[R]</span> Rakete</div>
-            <div><span style="text-align: center;vertical-align: top; color: white;">Auto </span><input id="hardMobile" style="width: 60px; height: 60px" type="checkbox"></div>
+        <div id="scene">
+            <div>
+                <p
+                    id="livesMeter"
+                    style="
+                        color: #575757;
+                        font-size: 500pt;
+                        user-select: none;
+                        text-align: center;
+                    "
+                >
+                    5
+                </p>
+            </div>
+            <div class="container">
+                <h1>Start the game</h1>
+            </div>
+
+            <datalist>
+                <object
+                    id="ship"
+                    data="graphics/ship.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="ufo"
+                    data="graphics/ufo.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="missile"
+                    data="graphics/missile.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="laser"
+                    data="graphics/laser.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="mylaser"
+                    data="graphics/mylaser.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="mymissile"
+                    data="graphics/mymissile.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="shield"
+                    data="graphics/shield.svg"
+                    type="image/svg+xml"
+                ></object>
+                <object
+                    id="border"
+                    data="graphics/border.svg"
+                    type="image/svg+xml"
+                ></object>
+            </datalist>
+            <object
+                id="target"
+                data="graphics/target.svg"
+                type="image/svg+xml"
+            ></object>
         </div>
-        <div class="score">
-            Score: <span id='score'>0</span>
-	    <br>Highest: <span id='highScore'>0</span>
-        </div>
-    </div>
-	<div style="position: fixed; bottom: 10%; right: 10%; background: white; visibility: hidden;">
-		Your room id:
-		<input id="room" type="text"></input>
-	</div>
-    <div id="scene">
-		<div>
-			<p id = "livesMeter" style = " color: #575757; font-size: 500pt; user-select: none; text-align: center">5</p>
-		</div>
-        <div class="container">
-            <h1>Start the game</h1>
-        </div>
-		
-        <datalist>
-            <object id="ship" data="graphics/ship.svg" type="image/svg+xml"></object>
-			<object id="other-ship" data="graphics/other-ship-taras.svg" type="image/svg+xml"></object>
-            <object id="ufo" data="graphics/ufo.svg" type="image/svg+xml"></object>
-            <object id="missile" data="graphics/missile.svg" type="image/svg+xml"></object>
-            <object id="laser" data="graphics/laser.svg" type="image/svg+xml"></object>
-            <object id="mylaser" data="graphics/mylaser.svg" type="image/svg+xml"></object>
-            <object id="mymissile" data="graphics/mymissile.svg" type="image/svg+xml"></object>
-
-        </datalist>
-        <object id="target" data="graphics/target.svg" type="image/svg+xml"></object>
-    </div>
-    <script type="module" defer>
-const LIVES = 5;
-	// STEUERUNG
-const KEY_BOOST = 'KeyW'; // Taste zum Beschleunigen
-const SEND_INTERVAL = 50;
-const KEY_SPAWN = 'KeyS'; // Todo: entfernen
-const KEY_SHOOT_ROCKET = 'KeyR'; // Taste zur Lenkraketenfreigabe
-const KEY_SHOOT_LASER = 'Space'; // Taste zur Lenkraketenfreigabe
-const ADD_BOOST = 'ShiftLeft';
-// KONSTANTEN
-const MAX_OBJECTS = 16; // Maximale Anzahl von Objekten auf dem Bildschirm
-const SHIP_ACCELERATION = 900; // Schiffbeschleunigung in Pixel pro Quadratsekunde
-const MISSILE_VELOCITY = 350; // Lenkraketengeschwindigkeit in Pixel pro Sekunde
-const MISSILE_DELAY = 1000; // Lenkraketenabklingzeit in Millisekunden
-const MISSILE_TURN_ANGLE = 0.02; // Maximaler Lenkraktendrehwinkel in Radianten
-const LASER_VELOCITY = 450; // LASER-Geschwindigkeit in Pixel pro Sekunde
-const LASER_DELAY = 450; // Laserabklingzeit in Millisekunden
-const UFO_VELOCITY = 150; // UFO-Geschwindigkeit in Pixel pro Sekunde
-const UFO_PROP_SPAWN = 0.4; // Wahrscheinlichkeit für Erscheinen eines UFOs pro Sekunde
-const UFO_PROP_LASER = 0.3; // Wahrscheinlichkeit für Erscheinen eines LASERs pro Sekunde
-const UFO_PROP_ROCKET = 0.05; // Wahrscheinlichkeit für Erscheinen eines LASERs pro Sekunde
-// Knopf
-var versionID = document.getElementById("versionID");
-var hardMobile = document.getElementById("hardMobile");
-var theme = document.getElementById("theme");
-const parent = document.getElementById('scene');
-let highScore = 0
-let livesMeter = document.getElementById('livesMeter')
-var lives = LIVES;
-var mobile = false;
-let highMeter = document.getElementById('highScore')
-var muteButton = document.getElementById("muteButton");
-let internal_id_counter = 0;
-muteButton.addEventListener("click", muteUnMute); 
-hardMobile.addEventListener("click", switchMobile);    
-if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-    mobile = true;
-}
-var mute = true
-var police;
-
-hardMobile.checked = mobile;
-
-function preload(imgs) {
-    var img;
-	for(var z = 0; z<=5; z++){
-		for (var i = 0, len = imgs.length; i < len; ++i) {
-			img = new Image();
-			img.src = imgs[i];
-			img = "";
-		}
-	}
-}
-
-preload(["graphics/ship.svg","graphics/other-ship-taras.svg","graphics/other-ship-efim.svg","graphics/ufo.svg","graphics/missile.svg","graphics/laser.svg","graphics/target.svg"]);
-
-const gitVersion = new XMLHttpRequest();
-gitVersion.open("GET", 'https://api.github.com/repos/efim-sys/metaballs/commits/main');
-gitVersion.send();
-gitVersion.onreadystatechange = (e) => {
-  versionID.innerHTML = "v. "+gitVersion.responseText.substring(12, 19);
-}
-
-function switchMobile(){
-    mobile = hardMobile.checked;
-}
-
-function muteUnMute(){
-	if(mute){
-		mute = false;
-		let blue = false;
-		police = setInterval(function(){
-			if(!blue){
-				scene.ship.texture = "graphics/other-ship-efim.svg";
-			}else{
-				scene.ship.texture = "graphics/ship.svg";
-			}
-			blue = !blue;
-		},500)
-		muteButton.innerHTML = "🔊"; 
-		theme.play();
-	}
-	else{
-		mute = true;
-		clearInterval(police);
-		scene.ship.texture = "graphics/ship.svg";
-		muteButton.innerHTML = "🔈";
-		theme.pause();
-	}
-}
-	    
-// Object
-class Obj {
-    constructor(id) {
-		id = this.text_id(id);
-        this.id = id;
-		this.sub_id = 0;
-		internal_id_counter += 1;
-		this.internal_id = internal_id_counter;
-		this.element = document.getElementById(id).cloneNode();
-        this.element.onload = () => {
-            this.content = this.element.contentDocument;
-        }
-
-        this.position = {x: 0, y: 0};
-        this.velocity = {x: 0, y: 0};
-        this.acceleration = {x: 0, y: 0};
-        this.rotation = 0;
-    }
-	set texture(texture) {
-		this.element.data = texture;
-	}
-	text_id(num) {
-		if(Number.isInteger(num)) {
-			switch (num) {
-				case 0:
-					return "ship";
-					break;
-				case 1:
-					return "other-ship";
-					break;
-				case 2:
-					return "ufo";
-					break;
-				case 3:
-					return "missile";
-					break;
-				case 4:
-					return "laser";
-					break;
-			}
-		}else{
-			return num;
-		}
-	}
-	get num_id() {
-		switch (this.id) {
-			case "ship":
-				return 0;
-				break;
-			case "other-ship":
-				return 1;
-				break;
-			case "ufo":
-				return 2;
-				break;
-			case "missile":
-				return 3;
-				break;
-			case "laser":
-				return 4;
-				break;
-		}
-	}
-    update(dt) {
-        this.velocity.x += this.acceleration.x * dt;
-        this.velocity.y += this.acceleration.y * dt;
-
-        this.position.x += this.velocity.x * dt;
-        this.position.y += this.velocity.y * dt;
-    }
-    setStyle() {
-        this.element.style.left = `${this.position.x}px`;
-        this.element.style.top = `${this.position.y}px`;
-        this.element.style.transform = `translate(-50%,-50%) rotate(${this.rotation}rad)`;
-    }
-    hitbox() {
-        return this.element.getBoundingClientRect();
-    }
-    swapSpeed() {
-        var temp;
-        
-        temp = this.velocity.x;
-        this.velocity.x = this.velocity.y;
-        this.velocity.y = temp;
-        
-        temp = this.acceleration.x;
-        this.acceleration.x = this.acceleration.y;
-        this.acceleration.y = temp;
-    }
-    wormhole() {
-        if (this.position.x < 0 || this.position.x >= window.innerWidth) {
-            //this.swapSpeed();
-            //this.position.x = this.position.y / window.innerHeight * window.innerWidth;
-            //this.position.y = this.velocity.y > 0 ? 0 : window.innerHeight - 1;
-            this.position.x = (window.innerWidth - 1) * (this.position.x < 0);
-        }
-
-        if (this.position.y < 0 || this.position.y >= window.innerHeight) {
-            //this.swapSpeed();
-            //this.position.y = this.position.x / window.innerWidth * window.innerHeight;
-            //this.position.x = this.velocity.x > 0 ? 0 : window.innerWidth - 1;
-            this.position.y = (window.innerHeight - 1) * (this.position.y < 0);
-        }
-        // this.position.x = (this.position.x + window.innerWidth) % window.innerWidth;
-        // this.position.y = (this.position.y + window.innerHeight) % window.innerHeight;
-    }
-    outofmap() {
-        return (
-            this.position.x < 0 ||
-            this.position.x >= window.innerWidth ||
-            this.position.y < 0 ||
-            this.position.y >= window.innerHeight
-        )
-    }
-    colliding(obj) {
-        var a = this.hitbox();
-        var b = obj.hitbox();
-        return !(
-            ((a.top + a.height) < (b.top)) ||
-            (a.top > (b.top + b.height)) ||
-            ((a.left + a.width) < b.left) ||
-            (a.left > (b.left + b.width))
-        );
-    }
-    isInside(x, y) {
-        var rect = this.hitbox();
-        return (
-            x >= rect.left &&
-            x <= rect.right &&
-            y >= rect.top &&
-            y <= rect.bottom
-        );
-    }
-}
-// Szenenobjekt
-export class Scene {
-    constructor() {
-        this.running = true;
-        this.objects = new Set();
-        this.count = 0;
-		this.max_obj = MAX_OBJECTS;
-
-		this.mode = "single";
-
-        this.now = 0;
-        this.last = 0;
-        this.dt = 0;
-
-        this.lastLaser = 0;
-        this.lastMissile = 0;
-
-        this.mouse = {x: 0, y: 0};
-        this.keys = new Set();
-
-        this.ship = new Obj('ship');
-        this.ship.position.x = window.innerWidth / 2;
-        this.ship.position.y = window.innerHeight / 2;
-        this.add(this.ship);
-
-        this.aim = document.getElementById('target');
-        this.score = document.getElementById('score')
-        this.target = undefined;
-    }
-    addPoints(points) {
-        this.count += points;
-	if(this.count > highScore){highScore = this.count;highMeter.innerHTML = highScore}
-        this.score.innerHTML = this.count;
-    }
-    add(obj) {
-        this.objects.add(obj);
-        parent.appendChild(obj.element);
-    }
-    remove(obj) {
-        this.objects.delete(obj);
-        parent.removeChild(obj.element);
-    }
-    shootLaser(author, direction) {
-			var laser
-            if(author.id === "ship")
-                laser = new Obj('mylaser');
-            else
-                laser = new Obj('laser');
-			laser.position.x = author.position.x;
-			laser.position.y = author.position.y;
-			laser.rotation = direction;
-			laser.velocity.x = LASER_VELOCITY * Math.cos(direction);
-			laser.velocity.y = LASER_VELOCITY * Math.sin(direction);
-			laser.author = author;
-			this.add(laser);
-    }
-    shootMissile(author, target) {
-            var missile
-            if(author.id === "ship")
-                missile = new Obj('mymissile');
-            else
-                missile = new Obj('missile');
-			missile.position.x = author.position.x;
-			missile.position.y = author.position.y;
-			missile.rotation = author.rotation;
-			missile.author = author;
-			missile.target = target;
-			this.add(missile);
-    }
-    update() {
-        this.target = undefined;
-		
-		if(this.mode == "multi"){
-			this.max_obj = MAX_OBJECTS / multi.amount;
-		}
-		
-        for (var obj of this.objects) {
-            if (obj.id != 'ufo') continue;
-            if (obj.isInside(this.mouse.x, this.mouse.y)) {
-                this.target = obj;
-            }
-        }
-        this.ship.rotation = Math.atan2(
-            this.ship.position.x - this.mouse.x,
-            this.mouse.y - this.ship.position.y
-        ) + Math.PI * 0.5;
-    
-        if (this.target) {
-            var box = this.target.hitbox();
-            this.aim.style.display = 'inline';
-            this.aim.style.width = `${box.width}px`;
-            this.aim.style.left = `${this.target.position.x}px`;
-            this.aim.style.top = `${this.target.position.y}px`;
-        } else {
-            this.aim.style.display = 'none';
-        }
-
-        if ((this.keys.has(KEY_SHOOT_LASER) || mobile) && this.now - this.lastLaser > LASER_DELAY) {
-            this.lastLaser = this.now;
-            this.shootLaser(this.ship, this.ship.rotation)
-        }
-
-        if ((this.keys.has(KEY_SHOOT_ROCKET) || mobile) && this.now - this.lastMissile > MISSILE_DELAY && this.target) {
-            this.lastMissile = this.now;
-            this.shootMissile(this.ship, this.target);
-        }
-        
-		if (this.keys.has("KeyL") && this.keys.has("KeyK")) {
-			lives += 1;
-		}
-		
-        if (this.objects.size < this.max_obj && Math.random() < UFO_PROP_SPAWN * this.dt || this.keys.has(KEY_SPAWN)) {
-            var ufo = new Obj('ufo');
-            var rand = Math.random();
-            var sel = Math.random() < 0.5;
-            ufo.position.x = (sel ? 0 : rand) * window.innerWidth;
-            ufo.position.y = (sel ? rand : 0) * window.innerHeight;
-            var angle = Math.random() * 2 * Math.PI;
-            ufo.velocity.x = UFO_VELOCITY * Math.cos(angle);
-            ufo.velocity.y = UFO_VELOCITY * Math.sin(angle);
-            this.add(ufo);
-        }
-
-        for (var obj of this.objects) {
-            obj.update(this.dt);
-        }
-
-        for (var obj of this.objects) {
-            switch (obj.id) {
-                case 'ship': {
-                    obj.wormhole();
-                    var boosting = this.keys.has(KEY_BOOST) || mobile;
-					if(this.keys.has(ADD_BOOST))boosting *= 2;
-                    if (obj.content) {
-                        obj.content.getElementById('flame').setAttribute('opacity', 1 * boosting);
-                        
-		    }
-                    obj.acceleration.x = boosting * SHIP_ACCELERATION * Math.cos(obj.rotation);
-                    obj.acceleration.y = boosting * SHIP_ACCELERATION * Math.sin(obj.rotation);
-                    obj.velocity.x *= 1 - this.dt;
-                    obj.velocity.y *= 1 - this.dt;
-                    break;
-                }
-				case 'other-ship': {
-                    obj.wormhole();
-                    obj.acceleration.x = 0;
-                    obj.acceleration.y = 0;
-                    obj.velocity.x *= 1 - this.dt;
-                    obj.velocity.y *= 1 - this.dt;
-                    break;
-                }
-                case 'ufo': {
-                    if (obj.colliding(this.ship)) {
-					    this.remove(obj);
-                        this.gameOver();
-                    }
-                    if (Math.random() < UFO_PROP_LASER * this.dt) {
-                        var dx = this.ship.position.x - obj.position.x;
-                        var dy = this.ship.position.y - obj.position.y;
-                        this.shootLaser(obj, Math.atan2(dy, dx));
-                    } else if (Math.random() < UFO_PROP_ROCKET * this.dt) {
-                        this.shootMissile(obj, this.ship);
-                    }
-                    obj.wormhole();
-                    break;
-                }
-                case 'missile': {
-                    if (obj.target) {
-                        var angle = Math.atan2(obj.target.position.y - obj.position.y, obj.target.position.x - obj.position.x);
-                        var offset = angle - obj.rotation;
-                        obj.rotation += Math.min(offset, Math.sign(offset) * MISSILE_TURN_ANGLE);
-                    }
-                    obj.velocity.x = MISSILE_VELOCITY * Math.cos(obj.rotation);
-                    obj.velocity.y = MISSILE_VELOCITY * Math.sin(obj.rotation);
-                    // continues at laser
-                }
-                case 'laser': {
-                    if (obj.outofmap()) {
-                        this.remove(obj);
-                    } else {
-                        for (var other of this.objects) {
-                            if (obj.element == other.element) continue;
-                            if (obj.author == other) continue;
-                            //if (obj.author == other.author) continue;
-                            if (obj.colliding(other)) {
-                                if (other == this.ship) {
-								    this.remove(obj);
-									
-                                    this.gameOver(); 
-                                }
-                                else
-                                {
-                                    if(other.sub_id == 0){this.remove(other);}
-                                    this.remove(obj);
-                                    this.addPoints(Math.floor(Math.random() * 25))
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-            obj.setStyle();
-        }
-		livesMeter.innerHTML = lives;
-    }
-    gameOver() {
-	    //console.log(lives);
-		lives -= 1;
-		livesMeter.innerHTML = lives;
-	    	
-		if(lives < 1){
-			lives = LIVES;
-			livesMeter.innerHTML = lives;
-			for (var obj of this.objects) {
-				this.remove(obj);
-			}
-			this.add(this.ship);
-			this.running = false;
-			parent.classList.remove('playing');
-		}
-    }
-    animate(now) {
-        if (!this.running) return;
-        this.now = now;
-        this.dt = (this.now - this.last) * 0.001;
-        this.last = this.now;
-        this.update();
-        requestAnimationFrame(this.animate.bind(this));
-    }
-    start() {
-        this.running = true;
-        this.addPoints(-this.count);
-        parent.classList.add('playing');
-        requestAnimationFrame(this.animate.bind(this));
-    }
-}
-class MultiPlayer {
-	constructor(){
-		this.start();
-	}
-	start(){
-		this.server_icon = document.getElementById("server").style
-		this.pass = "";
-		this.amount = 0;
-		this.id = Math.round(Math.random()*1000000)+1
-		this.server_icon.color = "blue";
-		this.room = document.getElementById("room")
-		this.room.onchange = this.connect_room;
-		this.socket = new WebSocket("wss://g.548b.ru/wss");
-		this.socket.onopen = this.bind_ws;
-		this.socket.onclose = this.close_ws;
-		this.socket.binaryType = "arraybuffer";
-	}
-	bind_ws(){
-		multi.server_icon.color = "green";
-		multi.room.parentElement.style.visibility = "visible";
-		this.onmessage = multi.on_msg;
-		this.onclose = multi.close_ws;
-	}
-	close_ws(){
-		multi.server_icon.color = "red";
-		setTimeout(function(){
-			multi = new MultiPlayer();
-		},2000);
-	}
-	connect_room(){
-		multi.socket.send("connect " + this.value);
-		this.parentElement.style.visibility = "hidden";
-		setInterval(multi.our_ship,SEND_INTERVAL);
-		setInterval(multi.our_objects,SEND_INTERVAL*4);
-		setInterval(multi.amount_request,5000);
-		setInterval(multi.send_score,5000);
-	}
-	pass_check(){
-		if(typeof(this.msg.pass) != "undefined"){
-			let pass = this.msg.pass;
-			if(this.pass == "")this.pass = pass;
-			if(pass != this.pass){
-				this.close_ws();
-				alert("Password spoofing!!!");
-			}
-		}
-	}
-	our_objects(){
-		if(scene.running && scene.mode == "multi"){
-			multi.socket.send("binary");
-			scene.objects.forEach(function(el,k,s){
-				if((el.sub_id == 0 || el.sub_id == multi.id) && el.id != "ship"){
-					let arr_out_objects = new ArrayBuffer(128);
-					arr_out_objects = new Float32Array(arr_out_objects);
-					arr_out_objects[0] = multi.id;
-					arr_out_objects[1] = el.num_id;
-					arr_out_objects[2] = el.internal_id;
-					arr_out_objects[3] = el.acceleration.x/window.innerWidth;
-					arr_out_objects[4] = el.acceleration.y/window.innerHeight;
-					arr_out_objects[5] = el.position.x/window.innerWidth;
-					arr_out_objects[6] = el.position.y/window.innerHeight;
-					arr_out_objects[7] = el.velocity.x/window.innerWidth;
-					arr_out_objects[8] = el.velocity.y/window.innerHeight;
-					arr_out_objects[9] = el.rotation;
-					multi.socket.send(arr_out_objects);
-					
-				}
-			});
-			multi.socket.send("text");
-		}
-	}
-	our_ship(){
-		if(scene.running && scene.mode == "multi"){
-			multi.socket.send("binary");
-				let ship = scene.ship;
-				if(ship.sub_id == 0 || ship.sub_id == multi.id){
-					let arr_out_objects = new ArrayBuffer(128);
-					arr_out_objects = new Float32Array(arr_out_objects);
-					arr_out_objects[0] = multi.id;
-					arr_out_objects[1] = 1; //hardCoded I will rewrite it in future means "other-ship"
-					arr_out_objects[2] = ship.internal_id;
-					arr_out_objects[3] = ship.acceleration.x/window.innerWidth;
-					arr_out_objects[4] = ship.acceleration.y/window.innerHeight;
-					arr_out_objects[5] = ship.position.x/window.innerWidth;
-					arr_out_objects[6] = ship.position.y/window.innerHeight;
-					arr_out_objects[7] = ship.velocity.x/window.innerWidth;
-					arr_out_objects[8] = ship.velocity.y/window.innerHeight;
-					arr_out_objects[9] = ship.rotation;
-					multi.socket.send(arr_out_objects);
-				}
-			multi.socket.send("text");
-		}
-	}
-	other_object(){
-		let arr_in = new Float32Array(this.msg_raw);
-		if(arr_in[0] != this.id && arr_in.length > 31){
-			let counter = 0;
-			scene.objects.forEach(function(el,k,s){
-				if(el.sub_id == arr_in[0] && el.internal_id == arr_in[2]){
-					counter += 1;
-					el.acceleration.x = arr_in[3]*window.innerWidth;
-					el.acceleration.y = arr_in[4]*window.innerHeight;
-					el.position.x = arr_in[5]*window.innerWidth;
-					el.position.y = arr_in[6]*window.innerHeight;
-					el.velocity.x = arr_in[7]*window.innerWidth;
-					el.velocity.y = arr_in[8]*window.innerHeight;
-					el.rotation = arr_in[9];
-				}
-			});
-			if (counter == 0){
-				let temp_obj = new Obj(arr_in[1]);
-				temp_obj.sub_id = arr_in[0];
-				temp_obj.internal_id = arr_in[2];
-				if(temp_obj.sub_id > 500000 && temp_obj.id == "other-ship")temp_obj.texture = "graphics/other-ship-efim.svg";
-				scene.add(temp_obj);
-				setTimeout(function(obj){try{scene.remove(obj);}catch{/*console.log(obj);*/}},1000*10,temp_obj);
-				this.other_object();
-			}
-		}
-	}
-	send_score(){
-		multi.socket.send(JSON.stringify({"score": highScore}));
-	}
-	get_score(){
-		if(typeof(multi.msg.score) != "undefined"){
-			if(multi.msg.score > highScore){
-				highScore = multi.msg.score;
-				highMeter.innerHTML = highScore;
-			}
-		}
-	}
-	amount_request(){
-		multi.socket.send("amount");
-	}
-	amount_parse(){
-		if(typeof(this.msg.pass) != "undefined" && typeof(this.msg.data) != "undefined" && Number.isInteger(this.msg.data)){
-			this.amount = this.msg.data;
-		}
-		if(this.amount > 0)scene.mode = "multi";
-	}
-	on_msg(event){
-		let data = event.data;
-		multi.msg_raw = data;
-		try{multi.msg = JSON.parse(data);}catch{}
-		multi.amount_parse();
-		multi.pass_check();
-		multi.other_object();
-		multi.get_score();
-	}
-}
-let scene = new Scene();
-let multi = new MultiPlayer();
-addEventListener('keydown', e => {scene.keys.add(e.code);})
-addEventListener('keyup', e => {scene.keys.delete(e.code);})
-addEventListener('mousemove', e => {
-    scene.mouse.x = e.clientX;
-    scene.mouse.y = e.clientY;
-})
-// TODO: Ufo laser timer
-parent.addEventListener('mousedown', () => {
-    if (!parent.classList.contains('playing')) {
-        scene.start();
-    }
-})
-	</script>
-</body>
+        <script src="./scripts/main.js" type="module" defer></script>
+    </body>
 </html>

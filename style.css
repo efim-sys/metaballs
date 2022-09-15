@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans");
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +13,7 @@ body {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     overflow: hidden;
 }
 
@@ -22,15 +22,24 @@ object {
     pointer-events: none;
 }
 
-#ship, #other-ship {
+#border {
+    width: 120px;
+}
+
+#ship,
+#other-ship {
     width: 100px;
 }
 
-#ufo {
+#ufo,
+#shield {
     width: 80px;
 }
 
-#missile, #laser {
+#missile,
+#laser,
+#mymissile,
+#mylaser {
     width: 50px;
 }
 
@@ -132,5 +141,3 @@ object {
 #scene.playing object {
     display: inline;
 }
-
-
