@@ -29,7 +29,7 @@ hardMobile.checked = mobile
 const gitVersion = new XMLHttpRequest()
 gitVersion.open(
     "GET",
-    "https://api.github.com/repos/wowkoltyy/metaballs2.0/commits/main"
+    "https://api.github.com/repos/efim-sys/metaballs/commits/main"
 )
 gitVersion.send()
 gitVersion.onreadystatechange = (e) => {
